@@ -1,4 +1,12 @@
 require("@nomiclabs/hardhat-waffle");
+require("dotenv").config();
+
+// Keys
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const RINKEBY_KEY = process.env.RINKEBY_KEY;
+
+// URLs
+const RINKEBY_URL = process.env.RINKEBY_URL || "";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -18,4 +26,18 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
+  networks: {
+    hardhat: {
+      accounts: [
+        {
+          privateKey: PRIVATE_KEY,
+          balance: "10000000000000000000000000000000",
+        },
+      ],
+    },
+    rinkeby: {
+      url: `${RINKEBY_URL}`,
+      accounts: RINKEBY_KEY !== undefined ? [RINKEBY_KEY] : [],
+    },
+  }
 };
